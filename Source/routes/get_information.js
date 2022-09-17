@@ -98,7 +98,7 @@ router.put('/account/transaction/send',(req, res) => {
   Perform Transactions (Recieve Tokens)
   The variable amount stores the the number of tokens to be transferred
   The variable id is the account ID
-  http://localhost:3000/account/transaction/send?amount=' '&id=' '
+  http://localhost:3000/account/transaction/recieve?amount=' '&id=' '
 */
 
 
