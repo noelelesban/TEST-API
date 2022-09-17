@@ -66,8 +66,7 @@ router.put('/account/transaction/send',(req, res) => {
 		}
 		else
 		{
-	 				else
-	 				{
+	 	
 	 						if(accinfo.status = "active")				//check if account is active
 	 						{
 	 									Post.findOneAndUpdate({userEmail:accinfo.userEmail},{$inc : {amount : req.params.amount}}, {new : true} ,(error, data) => {				//	Seacrh for the User Email in the transaction-data.json file from the daatbase
@@ -88,7 +87,7 @@ router.put('/account/transaction/send',(req, res) => {
 	 								console.log(error)
 	 								res.statu(400).send('Uset Account is not Active')	
 	 						}
-	 				}
+	 				
 	 	}
 	 })	
 	}
