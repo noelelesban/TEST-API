@@ -102,7 +102,7 @@ router.put('/account/transaction/send',(req, res) => {
 */
 
 
-router.put('/account/transaction/send',(req, res) => {
+router.put('/account/transaction/recieve',(req, res) => {
 	res.setHeader('etag', etag(Buffer.from(JSON.stringify(body))))				//To compare Etag value for Optimistic Concurrency
 	if(versionCheck(req, res))																						//To check if Etag values match
 	{
