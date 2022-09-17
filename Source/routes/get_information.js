@@ -10,13 +10,13 @@ function versionCheck(req, res)										//To compare Etag values
 {
 		try
 		{
-				let resHeader = { etag: JSON.parse(res.get('etag')), 'if-none-match': '*'}
-				let reqHeader = { etag: req.header['etag'] != ' '? JSON.parse(req.headers['etag']) : req.headers['etag']}
-				return fresh(reqHeader, resHeader)
+			let resHeader = { etag: JSON.parse(res.get('etag')), 'if-none-match': '*'}
+			let reqHeader = { etag: req.header['etag'] != ' '? JSON.parse(req.headers['etag']) : req.headers['etag']}
+			return fresh(reqHeader, resHeader)
 		}
 		catch(error)
 		{
-				console.log(error)
+			console.log(error)
 		}
 }
 /* Get user account by searching with Email
@@ -54,42 +54,42 @@ router.put('/account/transaction/send',(req, res) => {
 	res.setHeader('etag', etag(Buffer.from(JSON.stringify(body))))				//To compare Etag value for Optimistic Concurrency
 	if(versionCheck(req, res))																						//To check if Etag values match
 	{
-			res.status(304).send('Transaction cannot be validated at this time')
+		res.status(304).send('Transaction cannot be validated at this time')
 	}
 	else
 	{
 		accinfo.findOne({_id :req.params.id}, function(err,foundObject) { // Search for Account ID in account-data.json file from the database	
 		if(error)
 		{
-				console.log(err)
-				res.status(400).send('User Account not Found')
+			console.log(err)
+			res.status(400).send('User Account not Found')
 		}
 		else
 		{
 	 	
-	 						if(accinfo.status = "active")				//check if account is active
-	 						{
-	 									Post.findOneAndUpdate({userEmail:accinfo.userEmail},{$inc : {amount : req.params.amount}}, {new : true} ,(error, data) => {				//	Seacrh for the User Email in the transaction-data.json file from the daatbase
-	 										if(error)
-	 										{
-	 												console.log(error)
-	 												res.status(400).send()
-	 										}
-	 										else
-	 										{
-	 												console.log(data)
+	 		if(accinfo.status = "active")				//check if account is active
+			{				
+	 			Post.findOneAndUpdate({userEmail:accinfo.userEmail},{$inc : {amount : req.params.amount}}, {new : true} ,(error, data) => {				//	Seacrh for the User Email in the transaction-data.json file from the daatbase
+	 			if(error)
+	 			{
+	 				console.log(error)
+	 				res.status(400).send()
+	 			}
+	 			else
+	 			{
+	 				console.log(data)
 
-	 										}
+	 			}
 	 									})	
-	 						}
-	 						else
-	 						{
-	 								console.log(error)
-	 								res.statu(400).send('Uset Account is not Active')	
-	 						}
+	 		}
+	 		else
+	 		{
+	 			console.log(error)
+	 			res.statu(400).send('Uset Account is not Active')	
+	 		}
 	 				
 	 	}
-	 })	
+	 	})	
 	}
 	
 })
@@ -110,46 +110,46 @@ router.put('/account/transaction/send',(req, res) => {
 	}
 	else
 	{
-				var amount1 = Post.amount       //To store the Users balance amount from the transactions-api.json file database 
-				var amount2 = req.params.amount     //To store number of tokens to be transfered from the User Account 
-				if(amount2 - amount1 >= 0)			//check if the final balance will become negative after the transaction
+		var amount1 = Post.amount       //To store the Users balance amount from the transactions-api.json file database 
+		var amount2 = req.params.amount     //To store number of tokens to be transfered from the User Account 
+		if(amount2 - amount1 >= 0)			//check if the final balance will become negative after the transaction
+		{
+	 		accinfo.findOne({_id :req.params.id}, function(err, foundObject) {		// Search for Account ID in account-data.json file from the database
+	 		if(err)
+	 		{
+	 			console.log(err)
+	 			res.status(400).send('User Account not Found')
+	 		}
+	 		else
+	 		{
+	 			if(accinfo.status = "active")				//check if account is active
 				{
-	 					accinfo.findOne({_id :req.params.id}, function(err, foundObject) {		// Search for Account ID in account-data.json file from the database
-	 						if(err)
-	 						{
-	 								console.log(err)
-	 								res.status(400).send('User Account not Found')
-	 						}
-	 						else
-	 						{
-	 								if(accinfo.status = "active")				//check if account is active
-	 								{
-	 											Post.findOneAndUpdate({userEmail:accinfo.userEmail},{$inc : {amount : req.params.amount}}, {new : true} ,(error, data) => {				//	Seacrh for the User Email in the transaction-data.json file from the daatbase
-	 												if(error)
-	 												{
-	 															console.log(error)
-	 															res.status(400).send()
-	 												}
-	 												else
-	 												{
-	 														console.log(data)
+	 				Post.findOneAndUpdate({userEmail:accinfo.userEmail},{$inc : {amount : req.params.amount}}, {new : true} ,(error, data) => {				//	Seacrh for the User Email in the transaction-data.json file from the daatbase
+	 				if(error)
+	 				{
+	 					console.log(error)
+	 					res.status(400).send()
+	 				}
+	 				else
+	 				{
+	 					console.log(data)
 
-	 												}
-	 											})	
-	 								}
-	 								else
-	 								{
-	 										console.log(error)
-	 										res.statu(400).send('Uset Account is not Active')	
-	 								}
-	 						}
-	 					}) 
+	 				}
+	 				})	
+	 			}
+	 			else
+	 			{
+	 				console.log(error)
+	 				res.statu(400).send('Uset Account is not Active')	
+	 			}
+	 		}
+	 		}) 
 
-				}
-				else
-				{	
-						console.log('Insufficient Tokens in User Account')
-				}
+			}
+		else
+		{	
+			console.log('Insufficient Tokens in User Account')
+		}
 		 
 	}
 })
