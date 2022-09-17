@@ -156,7 +156,7 @@ router.put('/account/transaction/recieve',(req, res) => {
 		
 
 /*Update Account status in the database file
-	http://localhost:3000/account/update/?status=' '&id=' '
+	http://localhost:3000/account/update?status=' '&id=' '
 */
 
 router.put('/account/update/:id',(req, res) => {
