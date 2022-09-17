@@ -1,5 +1,7 @@
 # TEST-API
-I have created various Endpoints to psrform the following operations on data models Accounts and Transactions stored in MongoDB as separate collections.
+I have created various API Endpoints to perform the following operations on the data models such as Accounts and Transactions stored in MongoDB as collections.
+
+API functions:
 - Get a User Account and its current balance based on the user ID
 - A transaction that send tokens from a User Account 
 - Recieve tokens to a User Account through a transcation
